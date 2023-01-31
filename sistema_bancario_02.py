@@ -53,7 +53,7 @@ def sacar(saldo, extrato, limite, limite_saque, quantidade_saques):
         print("Operação falhou! O valor informado é inválido.\n")
     return saldo, extrato, quantidade_saques
 
-def extrato(extrato, saldo):
+def emitir_extrato(extrato, saldo):
     print("################ EXTRATO ################\n")
     print("Não foram realizadas movimentações" if not extrato else extrato)
     print(f"Seu Saldo atual é R$ {saldo:.2f}\n")
@@ -76,18 +76,13 @@ while True:
     opcao = input(menu)
 
     if opcao == "d":
-        retorno = depositar(saldo, extrato)
-        saldo = retorno[0]
-        extrato = retorno[1]
+        saldo, extrato = depositar(saldo, extrato)
 
     elif opcao == "s":
-       retorno = list(sacar(saldo, extrato, limite, LIMITE_SAQUES, quantidade_saques))
-       saldo = retorno[0]
-       extrato = retorno[1]
-       quantidade_saques = retorno[2]
-           
+       saldo, extrato, quantidade_saque = list(sacar(saldo, extrato, limite, LIMITE_SAQUES, quantidade_saques))
+                  
     elif opcao == "e":
-       extrato(extrato, saldo)
+       emitir_extrato(extrato, saldo)
 
     elif opcao == "q":
         print("Obrigado por usar o nosso Sitema Bancário.")
