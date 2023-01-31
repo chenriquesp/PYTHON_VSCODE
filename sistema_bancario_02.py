@@ -15,8 +15,9 @@ limite = 500
 extrato = ""
 LIMITE_SAQUES = 3
 quantidade_saques = 0
+usuarios = {}
 
-def depositar(saldo, extrato=""):
+def depositar(/ saldo, extrato ):
     valor = float(input("informe o valor a ser depositado : "))
 
     if valor > 0:
@@ -29,7 +30,7 @@ def depositar(saldo, extrato=""):
     
     return saldo, extrato
 
-def sacar(saldo, extrato, limite, limite_saque, quantidade_saques):
+def sacar(*,saldo, extrato, limite, limite_saque, quantidade_saques):
     LIMITE_SAQUES = limite_saque
 
     valor = float(input("informe valor a ser sacado: "))
@@ -60,7 +61,12 @@ def emitir_extrato(extrato, saldo):
     print("#########################################\n")
     return
 
-def cadastrar_usuario():
+def cadastrar_usuario(usuarios = usuarios):
+    usuario = {}
+    endereco = {}
+
+
+
     return
 
 def cadastrar_conta():
@@ -76,10 +82,10 @@ while True:
     opcao = input(menu)
 
     if opcao == "d":
-        saldo, extrato = depositar(saldo, extrato)
+        saldo, extrato = depositar(saldo=saldo, extrato= extrato)
 
     elif opcao == "s":
-       saldo, extrato, quantidade_saque = list(sacar(saldo, extrato, limite, LIMITE_SAQUES, quantidade_saques))
+       saldo, extrato, quantidade_saque = list(sacar(saldo= saldo, extrato= extrato, limite= limite, limite_saque= LIMITE_SAQUES, quantidade_saques= quantidade_saques))
                   
     elif opcao == "e":
        emitir_extrato(extrato, saldo)
