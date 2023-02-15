@@ -90,6 +90,8 @@ def cadastrar_conta(contas=contas, agencia=AGENCIA):
     conta["agencia"] = agencia
     conta["usuario"] = usuario
 
+    contas.append(conta)
+
     print("Conta inserido com sucesso.")
 
 def listar_usuario(cpf, usuarios=usuarios):
@@ -107,7 +109,7 @@ def listar_conta(contas=contas):
     print("#############################################\n")
 
     for conta in contas:
-        print(" conta: " + conta["numero"])
+        print(" conta: " + str(conta["numero"]))
         print("Agencia: " + conta["agencia"])
         print("Usuário: " + conta["usuario"]["nome"])
 
