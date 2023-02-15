@@ -100,8 +100,16 @@ def listar_usuario(cpf, usuarios=usuarios):
     return
 
 def listar_conta(contas=contas):
+    # if not len(contas):
+    #     print("Não existe contas cadastradas.")
+    #     return
 
-    return
+    print("#############################################\n")
+
+    for conta in contas:
+        print(" conta: " + conta["numero"])
+        print("Agencia: " + conta["agencia"])
+        print("Usuário: " + conta["usuario"]["nome"])
 
 
 while True:
@@ -136,7 +144,7 @@ while True:
         cadastrar_conta()
     
     elif opcao == "lc":
-        print("Em construção")
+        listar_conta()
     
     elif opcao == "nu":
         cadastrar_usuario()
