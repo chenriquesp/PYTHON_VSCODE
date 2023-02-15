@@ -13,14 +13,15 @@ Selecione sua opção:
 
 => """
 
+LIMITE_SAQUES = 3
+AGENCIA = "0001"
+
 saldo = 0.0
 limite = 500
 extrato = ""
-LIMITE_SAQUES = 3
 quantidade_saques = 0
 usuarios = []
 contas = []
-AGENCIA = "0001"
 
 def depositar( saldo, extrato, valor, /):
     if valor > 0:
@@ -71,16 +72,16 @@ def cadastrar_usuario(usuarios=usuarios):
         return
     usuario["cpf"] = cpf
     usuario["nome"] = input("Insira o nome do Usuário: ")
-    usuario["data_nascimento"] = input("Insira a data de nascimento do Usuário: ")
+    usuario["data_nascimento"] = input("Insira a data de nascimento do Usuário(dd/mm/aaaa): ")
     usuario["endereco"] = input("Insira o endereço do Usuário (logradouro, nro - bairro - cidade/sigla estado): ")
 
     usuarios.append(usuario)
     print("Usuário inserido com sucesso.")
 
-def cadastrar_conta(contas=contas, agencia=AGENCIA):
+def cadastrar_conta(contas, agencia=AGENCIA):
     conta = {}
 
-    cpf = input("Informe o CPF do usuário: ")
+    cpf = input("Informe o CPF do Titular da C/C: ")
     usuario = listar_usuario(cpf)
     if not usuario:
         print("Usuário não existe, favor cadastrar Usuário primeiro.")
@@ -91,28 +92,28 @@ def cadastrar_conta(contas=contas, agencia=AGENCIA):
     conta["usuario"] = usuario
 
     contas.append(conta)
+    numero_conta = conta["numero"]
 
-    print("Conta inserido com sucesso.")
+    print(f"\nConta {numero_conta} inserida com sucesso.")
 
 def listar_usuario(cpf, usuarios=usuarios):
     for item in usuarios:
         if item["cpf"] == cpf:
-            return item
-    
+            return item 
     return
 
 def listar_conta(contas=contas):
-    # if not len(contas):
-    #     print("Não existe contas cadastradas.")
-    #     return
+    if not len(contas):
+        print("Não existe contas cadastradas.")
+        return
 
     print("#############################################\n")
 
     for conta in contas:
-        print(" conta: " + str(conta["numero"]))
-        print("Agencia: " + conta["agencia"])
-        print("Usuário: " + conta["usuario"]["nome"])
-
+        print("#########################################################\n")
+        print("Agencia:\t" + conta["agencia"])
+        print("C/C:\t\t" + str(conta["numero"]))
+        print("Titular:\t" + conta["usuario"]["nome"] + "\n")
 
 while True:
 
@@ -143,7 +144,7 @@ while True:
         break
 
     elif opcao == "nc":
-        cadastrar_conta()
+        cadastrar_conta(contas)
     
     elif opcao == "lc":
         listar_conta()
