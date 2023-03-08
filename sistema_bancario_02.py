@@ -1,18 +1,3 @@
-menu = """
-#### Sistema Bancário ####
-
-Selecione sua opção:
-
-   [d]\tDepositar
-   [s]\tSacar
-   [e]\tExtrato
-   [nc]\tNova Conta
-   [lc]\tListar Contas
-   [nu]\tNovo Usuário
-   [q]\tSair
-
-=> """
-
 LIMITE_SAQUES = 3
 AGENCIA = "0001"
 
@@ -22,6 +7,22 @@ extrato = ""
 quantidade_saques = 0
 usuarios = []
 contas = []
+
+def menu():
+    return input("""
+    #### Sistema Bancário ####
+
+    Selecione sua opção:
+
+    [d]\t\tDepositar
+    [s]\t\tSacar
+    [e]\t\tExtrato
+    [nc]\tNova Conta
+    [lc]\tListar Contas
+    [nu]\tNovo Usuário
+    [q]\t\tSair
+
+    => """)
 
 def depositar( saldo, extrato, valor, /):
     if valor > 0:
@@ -115,42 +116,45 @@ def listar_conta(contas=contas):
         print("C/C:\t\t" + str(conta["numero"]))
         print("Titular:\t" + conta["usuario"]["nome"] + "\n")
 
-while True:
+def main():
+    while True:
 
-    opcao = input(menu)
+        opcao = menu()
 
-    if opcao == "d":
+        if opcao == "d":
+            
+            valor = float(input("informe o valor a ser depositado : "))
+
+            saldo, extrato = depositar(saldo, extrato, valor)
+
+        elif opcao == "s":
+            valor = float(input("informe valor a ser sacado: "))
+
+            saldo, extrato = sacar(
+                saldo= saldo, 
+                valor= valor, 
+                extrato= extrato, 
+                limite= limite, 
+                limite_saque= LIMITE_SAQUES, 
+                quantidade_saques= quantidade_saques)
+                    
+        elif opcao == "e":
+            emitir_extrato(extrato, saldo=saldo)
+
+        elif opcao == "q":
+            print("Obrigado por usar o nosso Sitema Bancário.")
+            break
+
+        elif opcao == "nc":
+            cadastrar_conta(contas)
         
-        valor = float(input("informe o valor a ser depositado : "))
-
-        saldo, extrato = depositar(saldo, extrato, valor)
-
-    elif opcao == "s":
-        valor = float(input("informe valor a ser sacado: "))
-
-        saldo, extrato = sacar(
-            saldo= saldo, 
-            valor= valor, 
-            extrato= extrato, 
-            limite= limite, 
-            limite_saque= LIMITE_SAQUES, 
-            quantidade_saques= quantidade_saques)
-                  
-    elif opcao == "e":
-       emitir_extrato(extrato, saldo=saldo)
-
-    elif opcao == "q":
-        print("Obrigado por usar o nosso Sitema Bancário.")
-        break
-
-    elif opcao == "nc":
-        cadastrar_conta(contas)
-    
-    elif opcao == "lc":
-        listar_conta()
-    
-    elif opcao == "nu":
-        cadastrar_usuario()
-    
-    else:
-        print("Opção inválida, por favor selecione novamente a operação desejada.\n")
+        elif opcao == "lc":
+            listar_conta()
+        
+        elif opcao == "nu":
+            cadastrar_usuario()
+        
+        else:
+            print("Opção inválida, por favor selecione novamente a operação desejada.\n")
+        
+main()
